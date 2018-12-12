@@ -11,19 +11,22 @@ then
 else
   echo "Creating an Android emulator..."
   cd $ANDROID_HOME/tools/bin
-  echo "y" | ./sdkmanager "system-images;android-25;google_apis;x86"
+  echo "y" | ./sdkmanager "system-images;android-26;google_apis;x86"
   echo "y" | ./sdkmanager --licenses
   touch ~/.android/repositories.cfg
 
-  echo "no" | ./avdmanager create avd --force -n testAVD -k "system-images;android-25;google_apis;x86"
+  echo "no" | ./avdmanager create avd --force -n Nexus_5X_API_26 -k "system-images;android-26;google_apis;x86" 
 
   echo "Modifying config..."
-  echo "hw.lcd.width=1080" >> /Users/vsts/.android/avd/testAVD.avd/config.ini
-  echo "hw.lcd.height=1920" >> /Users/vsts/.android/avd/testAVD.avd/config.ini
+  echo "hw.lcd.width=1080" >> /Users/vsts/.android/avd/Nexus_5X_API_26.avd/config.ini
+  echo "hw.lcd.height=1920" >> /Users/vsts/.android/avd/Nexus_5X_API_26.avd/config.ini
+
+  echo $ANDROID_HOME/emulator/emulator -list-avds
 
   echo "Starting the Android emulator..."
   cd $ANDROID_HOME/emulator
-  emulator -avd testAVD -netdelay none -netspeed full
+  nohup $ANDROID_HOME/emulator/emulator -avd Nexus_5X_API_26 -no-snapshot > /dev/null 2>&1 &
+$ANDROID_HOME/platform-tools/adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed | tr -d '\r') ]]; do sleep 1; done; input keyevent 82'
   cd $APPCENTER_SOURCE_DIRECTORY
 fi
 
