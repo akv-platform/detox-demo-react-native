@@ -25,8 +25,9 @@ else
 
   echo "Starting the Android emulator..."
   
-  nohup $ANDROID_HOME/emulator/emulator -avd Nexus_5X_API_26 -no-snapshot > /dev/null 2>&1 &
-$ANDROID_HOME/platform-tools/adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed | tr -d '\r') ]]; do sleep 1; done; input keyevent 82'
+  nohup $ANDROID_HOME/emulator/emulator -avd Nexus_5X_API_26 -no-snapshot > /dev/null 2>&1 
+  & $ANDROID_HOME/platform-tools/adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed | tr -d '\r') ]]; do sleep 1; done; input keyevent 82'
+  
   cd $APPCENTER_SOURCE_DIRECTORY
   echo "Emulator started"
 fi
@@ -55,10 +56,10 @@ then
   echo "Building the project..." 
   ./node_modules/.bin/detox build --configuration ios.sim.release 
   echo "Executing tests..." 
-  ./node_modules/.bin/detox test --configuration ios.sim.release --cleanup 
+  ./node_modules/.bin/detox test --loglevel verbose --configuration ios.sim.release --cleanup --debug-synchronization 1000
 else
   echo "Building the project..." 
   ./node_modules/.bin/detox build --configuration android.emu.debug
   echo "Executing tests..." 
-  ./node_modules/.bin/detox test --configuration android.emu.debug --cleanup 
+  ./node_modules/.bin/detox test --loglevel verbose --configuration android.emu.debug --cleanup --debug-synchronization 1000
 fi
