@@ -12,7 +12,7 @@ else
   echo "Creating an Android emulator..."
   cd $ANDROID_HOME/tools/bin
   echo "y" | ./sdkmanager "system-images;android-25;google_apis;x86"
-  echo "y" | ./sdkmanager --licenses
+  for i in {1..4};do echo "y"; done | ./sdkmanager --licenses
   touch ~/.android/repositories.cfg
 
   echo "no" | ./avdmanager create avd --force -n Nexus_5X_API_26 -k "system-images;android-25;google_apis;x86" 
@@ -58,7 +58,7 @@ then
   echo "Building the project..." 
   ./node_modules/.bin/detox build --configuration ios.sim.release 
   echo "Executing tests..." 
-  ./node_modules/.bin/detox test --loglevel verbose --configuration ios.sim.release --cleanup --debug-synchronization 1000
+  ./node_modules/.bin/detox test --configuration ios.sim.release --cleanup
 else
   echo "Building the project..." 
   ./node_modules/.bin/detox build --configuration android.emu.debug
