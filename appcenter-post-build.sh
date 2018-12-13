@@ -21,12 +21,15 @@ else
   echo "hw.lcd.width=1080" >> /Users/vsts/.android/avd/Nexus_5X_API_26.avd/config.ini
   echo "hw.lcd.height=1920" >> /Users/vsts/.android/avd/Nexus_5X_API_26.avd/config.ini
 
-  echo $ANDROID_HOME/emulator/emulator -list-avds
+  $ANDROID_HOME/emulator/emulator -list-avds
 
   echo "Starting the Android emulator..."
-  
-  nohup $ANDROID_HOME/emulator/emulator -avd Nexus_5X_API_26 -no-snapshot > /dev/null 2>&1 & $ANDROID_HOME/platform-tools/adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed | tr -d '\r') ]]; do sleep 1; done; input keyevent 82'
-  
+  cd $ANDROID_HOME/emulator
+  nohup emulator -avd Nexus_5X_API_26 -netdelay none -netspeed full > /dev/null 2>&1 &
+  echo "Ensure emulator run..."
+  $ANDROID_HOME/platform-tools/adb devices
+  echo "Wait for the Android emulator to run..."
+  while test x`$ANDROID_HOME/platform-tools/adb wait-for-device shell 'getprop sys.boot_completed'` != x1;do echo -e '.\c';do    ne
   cd $APPCENTER_SOURCE_DIRECTORY
   echo "Emulator started"
 fi
