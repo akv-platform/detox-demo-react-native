@@ -29,7 +29,7 @@ else
   echo "Ensure emulator run..."
   $ANDROID_HOME/platform-tools/adb devices
   echo "Wait for the Android emulator to run..."
-  while test x`$ANDROID_HOME/platform-tools/adb wait-for-device shell 'getprop sys.boot_completed'` != x1;do echo -e '.\c';do    ne
+  while test x`$ANDROID_HOME/platform-tools/adb wait-for-device shell 'getprop sys.boot_completed'` != x1;do echo -e '.\c';done
   cd $APPCENTER_SOURCE_DIRECTORY
   echo "Emulator started"
 fi
