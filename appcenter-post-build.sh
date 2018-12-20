@@ -21,10 +21,15 @@ else
   echo "hw.lcd.width=1080" >> /Users/vsts/.android/avd/Nexus_5X_API_26.avd/config.ini
   echo "hw.lcd.height=1920" >> /Users/vsts/.android/avd/Nexus_5X_API_26.avd/config.ini
 
+  echo "LOG: emulator -list-avds"
+  $ANDROID_HOME/emulator/emulator -list-avds
 
   echo "Starting the Android emulator..."
   cd $ANDROID_HOME/emulator
-  nohup emulator -avd Nexus_5X_API_26 -netdelay none -netspeed full > /dev/null 2>&1 &
+  nohup $ANDROID_HOME/emulator/emulator -avd Nexus_5X_API_26 -no-snapshot &
+  sleep 5
+  echo "LOG: nohup.out"
+  cat nohup.out
   echo "Ensure emulator run..."
 	$ANDROID_HOME/platform-tools/adb devices
   echo "LOG : adb shell ls"
