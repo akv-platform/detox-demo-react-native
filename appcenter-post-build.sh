@@ -26,7 +26,7 @@ else
 
   echo "Starting the Android emulator..."
   cd $ANDROID_HOME/emulator
-  nohup $ANDROID_HOME/emulator/emulator -avd Nexus_5X_API_26 -no-snapshot &
+  nohup emulator -avd Nexus_5X_API_26 -netdelay none -netspeed full &
   sleep 5
   echo "LOG: nohup.out"
   cat nohup.out
