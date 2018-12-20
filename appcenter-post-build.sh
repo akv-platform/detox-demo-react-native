@@ -26,6 +26,8 @@ else
   nohup emulator -avd testAVD -netdelay none -netspeed full > /dev/null 2>&1 &
   echo "Ensure emulator run..."
 	$ANDROID_HOME/platform-tools/adb devices
+  echo "LOG : adb shell ls"
+  $ANDROID_HOME/platform-tools/adb shell ls
   echo "Wait for the Android emulator to run..."
   test x`$ANDROID_HOME/platform-tools/adb wait-for-device shell 'getprop sys.boot_completed | tr -d "\r"'` == x && echo "yes" || echo "no"
 	sleep 1
