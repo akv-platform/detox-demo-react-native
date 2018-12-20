@@ -27,7 +27,13 @@ else
   echo "Ensure emulator run..."
 	$ANDROID_HOME/platform-tools/adb devices
   echo "Wait for the Android emulator to run..."
-	while test x`$ANDROID_HOME/platform-tools/adb wait-for-device shell 'getprop sys.boot_completed'` == x;do echo 'wait...':sleep 1;done
+  test x`$ANDROID_HOME/platform-tools/adb wait-for-device shell 'getprop sys.boot_completed | tr -d "\r"'` == x && echo "yes" || echo "no"
+	sleep 1
+  test x`$ANDROID_HOME/platform-tools/adb wait-for-device shell 'getprop sys.boot_completed | tr -d "\r"'` == x && echo "yes" || echo "no"
+	sleep 1
+  test x`$ANDROID_HOME/platform-tools/adb wait-for-device shell 'getprop sys.boot_completed | tr -d "\r"'` == x && echo "yes" || echo "no"
+	sleep 1
+  while test x`$ANDROID_HOME/platform-tools/adb wait-for-device shell 'getprop sys.boot_completed | tr -d "\r"'` == x;do echo 'wait...':sleep 1;done
   $ANDROID_HOME/platform-tools/adb wait-for-device shell 'input keyevent 82'
   cd $APPCENTER_SOURCE_DIRECTORY
 fi
