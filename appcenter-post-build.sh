@@ -26,14 +26,13 @@ else
 
   echo "Starting the Android emulator..."
   cd $ANDROID_HOME/emulator
-  nohup emulator -avd Nexus_5X_API_26 -netdelay none -netspeed full &
+  nohup emulator -avd Nexus_5X_API_26 -netdelay none -netspeed full 2>&1 &
   sleep 5
   echo "LOG: nohup.out"
   cat nohup.out
-  echo "Ensure emulator run..."
-	$ANDROID_HOME/platform-tools/adb devices
+
   echo "LOG : adb shell ls"
-  $ANDROID_HOME/platform-tools/adb shell ls
+  $ANDROID_HOME/platform-tools/adb wait-for-device shell ls
   echo "Wait for the Android emulator to run..."
   test x`$ANDROID_HOME/platform-tools/adb wait-for-device shell 'getprop sys.boot_completed | tr -d "\r"'` == x && echo "yes" || echo "no"
 	sleep 1
@@ -43,6 +42,10 @@ else
 	sleep 1
   while test x`$ANDROID_HOME/platform-tools/adb wait-for-device shell 'getprop sys.boot_completed | tr -d "\r"'` == x;do echo 'wait...':sleep 1;done
   $ANDROID_HOME/platform-tools/adb wait-for-device shell 'input keyevent 82'
+
+   echo "Ensure emulator run..."
+	$ANDROID_HOME/platform-tools/adb devices
+
   cd $APPCENTER_SOURCE_DIRECTORY
 fi
 
