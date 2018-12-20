@@ -10,14 +10,8 @@ pool:
   vmImage: 'Ubuntu-16.04'
 
 steps:
-- task: Gradle@2
+- task: PowerShell@2
+  displayName: 'PowerShell Script'
   inputs:
-    workingDirectory: ''
-    gradleWrapperFile: 'gradlew'
-    gradleOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.11'
-    jdkArchitectureOption: 'x64'
-    publishJUnitResults: false
-    testResultsFiles: '**/TEST-*.xml'
-    tasks: 'build'
+    targetType: ./
+    filePath: 'appcenter-post-build.ps1'
