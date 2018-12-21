@@ -26,7 +26,7 @@ else
 
   echo "Starting the Android emulator..."
   cd $ANDROID_HOME/emulator
-  nohup emulator -avd Nexus_5X_API_26 -gpu host -no-snapshot-save -no-boot-anim -no-window -snapshot clean_snap_1 > start_emulator.log 2>&1&
+  nohup emulator -avd Nexus_5X_API_26 -gpu guest -no-snapshot-save -no-boot-anim -no-window -snapshot clean_snap_1 > start_emulator.log 2>&1&
   sleep 5
   echo "----------------------------"
   echo "LOG: nohup.out"
