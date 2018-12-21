@@ -26,13 +26,17 @@ else
 
   echo "Starting the Android emulator..."
   cd $ANDROID_HOME/emulator
-  nohup emulator -avd Nexus_5X_API_26 -gpu guest -no-snapshot-save -no-boot-anim -no-window -snapshot clean_snap_1 > start_emulator.log 2>&1&
+  nohup emulator -avd Nexus_5X_API_26 -gpu guest -no-snapshot > /dev/null 2>&1 &
   sleep 5
+ 
+  echo "Wait for the Android emulator to run..."
+  $ANDROID_HOME/platform-tools/adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed | tr -d '\r') ]]; do sleep 1; done; input keyevent 82'
+   echo "Ensure emulator run..."
+	$ANDROID_HOME/platform-tools/adb devices
+
   echo "----------------------------"
   echo "LOG: nohup.out"
   cat nohup.out
-  echo "LOG: start_emulator.log"
-  cat start_emulator.log
   echo "LOG: spctl kext-consent list"
   spctl kext-consent list
   echo "----------------------------"
@@ -42,12 +46,6 @@ else
 
   echo "LOG : adb shell ls"
   $ANDROID_HOME/platform-tools/adb wait-for-device shell ls
-  echo "Wait for the Android emulator to run..."
-  while test x`$ANDROID_HOME/platform-tools/adb wait-for-device shell 'getprop sys.boot_completed | tr -d "\r"'` == x;do echo 'wait...':sleep 1;done
-  $ANDROID_HOME/platform-tools/adb wait-for-device shell 'input keyevent 82'
-
-   echo "Ensure emulator run..."
-	$ANDROID_HOME/platform-tools/adb devices
 
   cd $APPCENTER_SOURCE_DIRECTORY
 fi
