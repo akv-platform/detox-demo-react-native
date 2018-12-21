@@ -28,9 +28,13 @@ else
   cd $ANDROID_HOME/emulator
   nohup emulator -avd Nexus_5X_API_26  -no-snapshot-save -no-boot-anim -no-window -snapshot clean_snap_1 > start_emulator.log 2>&1&
   sleep 5
+  echo "----------------------------"
   echo "LOG: nohup.out"
   cat nohup.out
-
+  echo "LOG: start_emulator.log"
+  cat start_emulator.log
+  echo "----------------------------"
+  
 EMU_BOOTED='unknown'
 while [[ ${EMU_BOOTED} != *"stopped"* ]]; do
     echo "Waiting emulator to start..."
