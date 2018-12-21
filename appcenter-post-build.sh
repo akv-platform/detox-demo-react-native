@@ -15,7 +15,7 @@ else
   for i in {1..4};do echo "y"; done | ./sdkmanager --licenses
   touch ~/.android/repositories.cfg
 
-  echo "no" | ./avdmanager create avd --force -n Nexus_5X_API_26 -k "system-images;android-25;google_apis;x86" 
+  echo "no" | ./avdmanager create avd --force -n Nexus_5X_API_26 -gpu host -k "system-images;android-25;google_apis;x86" 
 
   echo "Modifying config..."
   echo "hw.lcd.width=1080" >> /Users/vsts/.android/avd/Nexus_5X_API_26.avd/config.ini
