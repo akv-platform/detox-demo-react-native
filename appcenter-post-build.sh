@@ -26,10 +26,20 @@ else
 
   echo "Starting the Android emulator..."
   cd $ANDROID_HOME/emulator
-  nohup emulator -avd Nexus_5X_API_26 -netdelay none -netspeed full 2>&1 &
+  nohup emulator -avd Nexus_5X_API_26  -no-snapshot-save -no-boot-anim -no-window -snapshot clean_snap_1 > start_emulator.log 2>&1&
   sleep 5
   echo "LOG: nohup.out"
   cat nohup.out
+
+EMU_BOOTED='unknown'
+while [[ ${EMU_BOOTED} != *"stopped"* ]]; do
+    echo "Waiting emulator to start..."
+    sleep 5
+    EMU_BOOTED=`adb shell getprop init.svc.bootanim || echo unknown`
+done
+echo "Android Emulator started...."
+echo "Ensure emulator run:"
+$ANDROID_HOME/platform-tools/adb devices
 
   echo "LOG : adb shell ls"
   $ANDROID_HOME/platform-tools/adb wait-for-device shell ls
