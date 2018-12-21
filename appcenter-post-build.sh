@@ -33,17 +33,12 @@ else
   cat nohup.out
   echo "LOG: start_emulator.log"
   cat start_emulator.log
+  echo "LOG: spctl kext-consent list"
+  spctl kext-consent list
   echo "----------------------------"
 
-EMU_BOOTED='unknown'
-while [[ ${EMU_BOOTED} != *"stopped"* ]]; do
-    echo "Waiting emulator to start..."
-    sleep 5
-    EMU_BOOTED=`$ANDROID_HOME/platform-tools/adb wait-for-device shell getprop init.svc.bootanim || echo unknown`
-done
-echo "Android Emulator started...."
-echo "Ensure emulator run:"
-$ANDROID_HOME/platform-tools/adb devices
+  echo "Ensure emulator run:"
+  $ANDROID_HOME/platform-tools/adb devices
 
   echo "LOG : adb shell ls"
   $ANDROID_HOME/platform-tools/adb wait-for-device shell ls
