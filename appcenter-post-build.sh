@@ -34,12 +34,12 @@ else
   echo "LOG: start_emulator.log"
   cat start_emulator.log
   echo "----------------------------"
-  
+
 EMU_BOOTED='unknown'
 while [[ ${EMU_BOOTED} != *"stopped"* ]]; do
     echo "Waiting emulator to start..."
     sleep 5
-    EMU_BOOTED=`adb shell getprop init.svc.bootanim || echo unknown`
+    EMU_BOOTED=`$ANDROID_HOME/platform-tools/adb wait-for-device shell getprop init.svc.bootanim || echo unknown`
 done
 echo "Android Emulator started...."
 echo "Ensure emulator run:"
@@ -48,12 +48,6 @@ $ANDROID_HOME/platform-tools/adb devices
   echo "LOG : adb shell ls"
   $ANDROID_HOME/platform-tools/adb wait-for-device shell ls
   echo "Wait for the Android emulator to run..."
-  test x`$ANDROID_HOME/platform-tools/adb wait-for-device shell 'getprop sys.boot_completed | tr -d "\r"'` == x && echo "yes" || echo "no"
-	sleep 1
-  test x`$ANDROID_HOME/platform-tools/adb wait-for-device shell 'getprop sys.boot_completed | tr -d "\r"'` == x && echo "yes" || echo "no"
-	sleep 1
-  test x`$ANDROID_HOME/platform-tools/adb wait-for-device shell 'getprop sys.boot_completed | tr -d "\r"'` == x && echo "yes" || echo "no"
-	sleep 1
   while test x`$ANDROID_HOME/platform-tools/adb wait-for-device shell 'getprop sys.boot_completed | tr -d "\r"'` == x;do echo 'wait...':sleep 1;done
   $ANDROID_HOME/platform-tools/adb wait-for-device shell 'input keyevent 82'
 
