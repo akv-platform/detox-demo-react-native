@@ -9,6 +9,8 @@ then
   cd ..
   export PATH=$PATH:./simutils/build/Build/Products/Release
 else
+  spctl kext-consent list
+  echo "------------------------------------LOG---------------------------------------------------------------"
   echo "Creating an Android emulator..."
   cd $ANDROID_HOME/tools/bin
   echo "y" | ./sdkmanager "system-images;android-25;google_apis;arm64-v8a"
@@ -25,14 +27,16 @@ else
   $ANDROID_HOME/emulator/emulator -list-avds
 
   echo "Starting the Android emulator..."
+  
   cd $ANDROID_HOME/emulator
+  cd $(dirname $(which emulator))
   nohup emulator -avd Nexus_5X_API_26 -no-snapshot > /dev/null 2>&1 &
   sleep 5
  
   echo "Wait for the Android emulator to run..."
   $ANDROID_HOME/platform-tools/adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed | tr -d '\r') ]]; do sleep 1; done; input keyevent 82'
-   echo "Ensure emulator run..."
-	$ANDROID_HOME/platform-tools/adb devices
+  echo "Ensure emulator run..."
+  $ANDROID_HOME/platform-tools/adb devices
 
   echo "----------------------------"
   echo "LOG: nohup.out"
