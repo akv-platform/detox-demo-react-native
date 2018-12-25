@@ -26,7 +26,7 @@ else
 
   echo "Starting the Android emulator..."
   cd $ANDROID_HOME/emulator
-  nohup emulator -avd Nexus_5X_API_26 -gpu guest -no-snapshot > /dev/null 2>&1 &
+  nohup emulator -avd Nexus_5X_API_26 -no-snapshot > /dev/null 2>&1 &
   sleep 5
  
   echo "Wait for the Android emulator to run..."
