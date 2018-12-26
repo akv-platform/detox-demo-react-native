@@ -11,7 +11,7 @@ then
 else
   echo "Creating an Android emulator..."
   cd $ANDROID_HOME/tools/bin
-  echo "y" | ./sdkmanager "system-images;android-25;google_apis;arm64-v8a"
+  echo "y" | ./sdkmanager "system-images;android-25;google_apis;armeabi-v7a"
   for i in {1..4};do echo "y"; done | ./sdkmanager --licenses
   touch ~/.android/repositories.cfg
 
