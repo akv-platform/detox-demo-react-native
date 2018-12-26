@@ -23,8 +23,9 @@ else
 
   echo "LOG: emulator -list-avds"
   $ANDROID_HOME/emulator/emulator -list-avds
-
+  
   echo "Starting the Android emulator..."
+  export DYLD_LIBRARY_PATH="$ANDROID_HOME/emulator/lib64/qt/lib"
   $ANDROID_HOME/emulator/emulator64-arm -avd Nexus_5X_API_26 -no-window -gpu off &
   sleep 5
 
