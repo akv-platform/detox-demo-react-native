@@ -50,7 +50,8 @@ else
 
   echo "LOG : adb shell ls"
   $ANDROID_HOME/platform-tools/adb wait-for-device shell ls
-
+  echo "---------POWER-------------------"
+  $ANDROID_HOME/platform-tools/adb shell service list | grep power
   cd $APPCENTER_SOURCE_DIRECTORY
 fi
 
