@@ -9,13 +9,15 @@ then
   cd ..
   export PATH=$PATH:./simutils/build/Build/Products/Release
 else
+  spctl kext-consent list
+  echo "------------------------------------LOG---------------------------------------------------------------"
   echo "Creating an Android emulator..."
   cd $ANDROID_HOME/tools/bin
-  echo "y" | ./sdkmanager "system-images;android-25;google_apis;armeabi-v7a"
+  echo "y" | ./sdkmanager "system-images;android-25;google_apis;arm64-v8a"
   for i in {1..4};do echo "y"; done | ./sdkmanager --licenses
   touch ~/.android/repositories.cfg
 
-  echo "no" | ./avdmanager --verbose create avd --abi armeabi-v7a --force -n Nexus_5X_API_26 -k "system-images;android-25;google_apis;armeabi-v7a" 
+  echo "no" | ./avdmanager create avd --force -n Nexus_5X_API_26 -k "system-images;android-25;google_apis;arm64-v8a" 
 
   echo "Modifying config..."
   echo "hw.lcd.width=1080" >> /Users/vsts/.android/avd/Nexus_5X_API_26.avd/config.ini
@@ -23,24 +25,32 @@ else
 
   echo "LOG: emulator -list-avds"
   $ANDROID_HOME/emulator/emulator -list-avds
-  
-  echo "Starting the Android emulator..."
-  $ANDROID_HOME/emulator/emulator -avd Nexus_5X_API_26 -no-window -gpu off &
-  sleep 5
 
-  echo "=================Waiting device:================="
-  EMU_BOOTED='unknown'
-  while [[ ${EMU_BOOTED} != *"1"* ]]; do
-      echo "Waiting emulator to start..."
-      sleep 5
-      EMU_BOOTED=`adb shell 'getprop sys.boot_completed | tr -d "\r"'`
-      echo "$EMU_BOOTED"
-  done
-  echo "Android Emulator started...."
-  echo "=================================================="
+  echo "Starting the Android emulator..."
+  
+  cd $ANDROID_HOME/emulator
+  cd $(dirname $(which emulator))
+  nohup emulator -avd Nexus_5X_API_26 -no-snapshot > /dev/null 2>&1 &
+  sleep 5
+ 
+  echo "Wait for the Android emulator to run..."
+  $ANDROID_HOME/platform-tools/adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed | tr -d '\r') ]]; do sleep 1; done; input keyevent 82'
+  echo "Ensure emulator run..."
+  $ANDROID_HOME/platform-tools/adb devices
+
+  echo "----------------------------"
+  echo "LOG: nohup.out"
+  cat nohup.out
+  echo "LOG: spctl kext-consent list"
+  spctl kext-consent list
+  echo "----------------------------"
 
   echo "Ensure emulator run:"
   $ANDROID_HOME/platform-tools/adb devices
+
+  echo "LOG : adb shell ls"
+  $ANDROID_HOME/platform-tools/adb wait-for-device shell ls
+
   cd $APPCENTER_SOURCE_DIRECTORY
 fi
 
