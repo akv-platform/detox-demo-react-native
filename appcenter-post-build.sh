@@ -13,11 +13,11 @@ else
   echo "------------------------------------LOG---------------------------------------------------------------"
   echo "Creating an Android emulator..."
   cd $ANDROID_HOME/tools/bin
-  echo "y" | ./sdkmanager "system-images;android-25;google_apis;arm64-v8a"
+  echo "y" | ./sdkmanager "system-images;android-19;default;arm64-v8a"
   for i in {1..4};do echo "y"; done | ./sdkmanager --licenses
   touch ~/.android/repositories.cfg
 
-  echo "no" | ./avdmanager create avd --force -n Nexus_5X_API_26 -k "system-images;android-25;google_apis;arm64-v8a" 
+  echo "no" | ./avdmanager create avd --force -n Nexus_5X_API_26 -k "system-images;android-19;default;arm64-v8a" 
 
   echo "Modifying config..."
   echo "hw.lcd.width=1080" >> /Users/vsts/.android/avd/Nexus_5X_API_26.avd/config.ini
