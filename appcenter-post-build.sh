@@ -49,6 +49,10 @@ else
 
   cd $APPCENTER_SOURCE_DIRECTORY
 
+	echo "Existing config.ini"
+
+	test -f /Users/vsts/.android/avd/Nexus_5X_API_26.avd/config.ini && cat /Users/vsts/.android/avd/Nexus_5X_API_26.avd/config.ini || echo "UNEXPECTED: No config.ini"
+
   echo "Modifying config..."
   echo "hw.lcd.width=1080" >> /Users/vsts/.android/avd/Nexus_5X_API_26.avd/config.ini
   echo "hw.lcd.height=1920" >> /Users/vsts/.android/avd/Nexus_5X_API_26.avd/config.ini
