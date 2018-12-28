@@ -19,10 +19,6 @@ else
 
   echo "no" | ./avdmanager create avd --force -n Nexus_5X_API_26 -k "system-images;android-25;google_apis;arm64-v8a" 
 
-  echo "Modifying config..."
-  echo "hw.lcd.width=1080" >> /Users/vsts/.android/avd/Nexus_5X_API_26.avd/config.ini
-  echo "hw.lcd.height=1920" >> /Users/vsts/.android/avd/Nexus_5X_API_26.avd/config.ini
-
   echo "LOG: emulator -list-avds"
   $ANDROID_HOME/emulator/emulator -list-avds
 
@@ -52,6 +48,10 @@ else
   $ANDROID_HOME/platform-tools/adb wait-for-device shell ls
 
   cd $APPCENTER_SOURCE_DIRECTORY
+
+  echo "Modifying config..."
+  echo "hw.lcd.width=1080" >> /Users/vsts/.android/avd/Nexus_5X_API_26.avd/config.ini
+  echo "hw.lcd.height=1920" >> /Users/vsts/.android/avd/Nexus_5X_API_26.avd/config.ini
 fi
 
 echo "Installing NVM..."
