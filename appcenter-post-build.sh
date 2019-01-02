@@ -3,11 +3,11 @@ WORK_DIR=`pwd`
 
 echo "Creating an Android emulator..."
 cd $ANDROID_HOME/tools/bin
-echo "y" | ./sdkmanager "system-images;android-26;google_apis;x86"
+echo "y" | ./sdkmanager "system-images;android-26;google_apis;arm64-v8a"
 for i in {1..4};do echo "y"; done | ./sdkmanager --licenses
 touch ~/.android/repositories.cfg
 
-echo "no" | ./avdmanager create avd --force -n Nexus_5X_API_26 -k "system-images;android-26;google_apis;x86"
+echo "no" | ./avdmanager create avd --force -n Nexus_5X_API_26 -k "system-images;android-26;google_apis;arm64-v8a"
 
 echo "Starting the Android emulator..."
 
