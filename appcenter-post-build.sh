@@ -75,7 +75,7 @@ node --version
 echo "Installing detox cli..."
 npm install -g detox-cli
 
-cd $WORK_DIR/examples/demo-react-native
+cd $WORK_DIR
 
 echo "Installing dependencies for detox tests..."
 npm install
