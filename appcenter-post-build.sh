@@ -17,8 +17,8 @@ nohup emulator64-arm -avd Nexus_5X_API_26 -no-snapshot > /dev/null 2>&1 &
 echo "Wait for the Android emulator process started..."
 i=1
 while ! $ANDROID_HOME/platform-tools/adb devices |grep 'emulator-';do
-   if [ $i -eq 10 ];then
-    echo "No emulator process started in 10 secs"
+   if [ $i -eq 600 ];then
+    echo "No emulator process started in 10 minutes"
     exit 1
   fi
   echo "...wait process... $i sec"
