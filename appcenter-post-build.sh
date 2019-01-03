@@ -12,7 +12,7 @@ echo "no" | ./avdmanager create avd --force -n Nexus_5X_API_26 -k "system-images
 echo "Starting the Android emulator..."
 
 cd $ANDROID_HOME/emulator
-nohup emulator -avd Nexus_5X_API_26 -no-snapshot > /dev/null 2>&1 &
+nohup emulator64-arm -avd Nexus_5X_API_26 -no-snapshot > /dev/null 2>&1 &
 
 echo "Wait for the Android emulator process started..."
 i=1
