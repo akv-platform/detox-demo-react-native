@@ -12,18 +12,19 @@ echo "no" | ./avdmanager create avd --force -n Nexus_5X_API_26 -k "system-images
 echo "Starting the Android emulator..."
 
 cd $ANDROID_HOME/emulator
-nohup emulator64-arm -avd Nexus_5X_API_26 -no-snapshot > /dev/null 2>&1 &
+#nohup ./emulator64-arm -avd Nexus_5X_API_26 -no-snapshot > /dev/null 2>&1 &
+./emulator64-arm -avd Nexus_5X_API_26 -no-snapshot
 
 echo "Wait for the Android emulator process started..."
-i=1
+i=0
 while ! $ANDROID_HOME/platform-tools/adb devices |grep 'emulator-';do
-   if [ $i -eq 600 ];then
-    echo "No emulator process started in 10 minutes"
+   if [ $i -eq 1200 ];then
+    echo "No emulator process started in 20 minutes"
     exit 1
   fi
+  i=$((i+10))
   echo "...wait process... $i sec"
-  sleep 1
-  i=$((i+1))
+  sleep 10
 done
 
 echo "Wait for the Android emulator device ready..."
