@@ -9,6 +9,11 @@ touch ~/.android/repositories.cfg
 
 echo "no" | ./avdmanager create avd --force -n Nexus_5X_API_26 -k "system-images;android-25;google_apis;arm64-v8a"
 
+ls -l "$ANDROID_HOME/emulator/lib64/qt/lib"
+
+export PATH=$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$PATH
+export DYLD_LIBRARY_PATH="$ANDROID_HOME/emulator/lib64/qt/lib:$DYLD_LIBRARY_PATH"
+
 echo "Starting the Android emulator..."
 
 cd $ANDROID_HOME/emulator
